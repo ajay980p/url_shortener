@@ -9,9 +9,9 @@ const connection = db();
 router.post('/shorten', async (req, res) => {
     const { longUrl } = req.body;
 
-    if (!validUrl.isWebUri(longUrl)) {
-        return res.status(400).json({ error: 'Invalid URL' });
-    }
+    // if (!validUrl.isWebUri(longUrl)) {
+    //     return res.status(400).json({ error: 'Invalid URL' });
+    // }
 
     let shortCode;
     let attempts = 0;
