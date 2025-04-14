@@ -27,3 +27,11 @@
     margin-top: 20px;
     word-break: break-all;
   }
+
+
+.Toastify__toast--success {
+    background-color: #28a745 !important;
+}
+.Toastify__toast--error {
+    background-color: #dc3545 !important;
+}

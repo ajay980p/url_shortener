@@ -1,5 +1,6 @@
 {
     "name": "backend",
+    "type": "module",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
@@ -10,12 +11,12 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "type": "commonjs",
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",
         "express": "^5.1.0",
         "mysql2": "^3.14.0",
+        "nanoid": "^5.1.5",
         "redis": "^4.7.0",
         "shortid": "^2.2.17",
         "valid-url": "^1.0.9"

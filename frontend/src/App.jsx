@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./App.css"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 function UrlShortener() {
     const [longUrl, setLongUrl] = useState('');
@@ -14,8 +15,16 @@ function UrlShortener() {
         try {
             const response = await axios.post(`${Url}/shorten`, { longUrl });
             setShortUrl(response.data.shortUrl);
+            toast.success('URL shortened successfully!', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
         } catch (error) {
             console.error('Error shortening URL:', error);
+            toast.error('Failed to shorten URL. Please try again.', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
         }
     };
 
@@ -36,6 +45,7 @@ function UrlShortener() {
                     Short URL: <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
                 </div>
             )}
+            <ToastContainer />
         </div>
     );
 }
