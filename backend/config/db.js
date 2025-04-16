@@ -18,7 +18,7 @@ function initializeDb() {
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             waitForConnections: true,
-            connectionLimit: 50,
+            connectionLimit: process.env.DB_POOL_LIMIT,
             queueLimit: 0,
             connectTimeout: 10000
         });
