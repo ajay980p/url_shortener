@@ -1,8 +1,8 @@
+dotenv.config();
 import mysql from 'mysql2/promise';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 
-dotenv.config();
 
 const TOTAL_KEYS = 1_000_000;
 const BATCH_SIZE = 1000;
@@ -10,10 +10,10 @@ const SHORT_CODE_LENGTH = 8;
 
 async function insertNanoIDs() {
     const connection = await mysql.createConnection({
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'ajay',
-        password: process.env.DB_PASSWORD || 'ajay',
-        database: process.env.DB_NAME || 'url_shortener',
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
     });
 
     const uniqueCodes = new Set();
