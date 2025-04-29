@@ -42,7 +42,10 @@ function UrlShortener() {
             </form>
             {shortUrl && (
                 <div className="short-url">
-                    Short URL: <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
+                    Short URL:
+                    <a href={shortUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'blue', cursor: 'pointer' }}>
+                        {shortUrl}
+                    </a>
                 </div>
             )}
             <ToastContainer />

@@ -3,12 +3,17 @@ import { check, sleep } from 'k6';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    vus: 300,
-    duration: '30s',
     thresholds: {
         http_req_duration: ['p(95)<200'],
         checks: ['rate>0.99'],
     },
+    stages: [
+        { duration: '30s', target: 500 },
+        { duration: '30s', target: 1000 },
+        { duration: '30s', target: 5000 },
+        { duration: '1m', target: 10000 },
+        { duration: '30s', target: 0 },
+    ]
 };
 
 export default function () {
@@ -43,5 +48,5 @@ export default function () {
         Body: ${res.body}`);
     }
 
-    sleep(0.1);
+    sleep(1);
 }

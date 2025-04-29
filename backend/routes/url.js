@@ -8,6 +8,8 @@ if (!pool) {
     throw new Error("Database pool is not available in URL routes.");
 }
 
+const connection = await pool.getConnection();
+
 router.post('/shorten', async (req, res) => {
     const { longUrl } = req.body;
     if (!longUrl) {
@@ -16,7 +18,6 @@ router.post('/shorten', async (req, res) => {
 
     const redirectionBase = process.env.REDIRECTION_URL || 'http://localhost:5000';
 
-    const connection = await pool.getConnection();
     try {
         try {
             await connection.beginTransaction();
@@ -48,18 +49,18 @@ router.post('/shorten', async (req, res) => {
             await connection.commit();
             connection.release();
 
-            console.log(`[KGS] Shortened ${longUrl} → ${shortUrl}`);
+            // console.log(`[KGS] Shortened ${longUrl} → ${shortUrl}`);
             res.status(201).json({ shortUrl });
 
         } catch (err) {
             await connection.rollback();
             connection.release();
-            console.error('[Transaction Error]', err);
+            // console.error('[Transaction Error]', err);
             res.status(500).json({ error: 'Error creating short URL' });
         }
     } catch (err) {
         connection.release();
-        console.error('[DB Connection Error]', err);
+        // console.error('[DB Connection Error]', err);
         res.status(500).json({ error: 'Database error' });
     }
 });
@@ -67,22 +68,22 @@ router.post('/shorten', async (req, res) => {
 
 
 
-// router.get('/s/:shortCode', async (req, res) => {
-//     const { shortCode } = req.params;
+router.get('/s/:shortCode', async (req, res) => {
+    const { shortCode } = req.params;
 
-//     try {
-//         const query = 'SELECT long_url FROM short_url WHERE short_code = ?';
-//         const [results] = await connection.query(query, [shortCode]);
+    try {
+        const query = 'SELECT long_url FROM short_url WHERE short_code = ?';
+        const [results] = await connection.query(query, [shortCode]);
 
-//         if (results.length === 0) {
-//             return res.status(404).json({ error: 'URL not found' });
-//         }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'URL not found' });
+        }
 
-//         res.redirect(301, results[0].long_url);
-//     } catch (err) {
-//         console.error('Error fetching URL:', err);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+        res.redirect(301, results[0].long_url);
+    } catch (err) {
+        console.error('Error fetching URL:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 export default router;
