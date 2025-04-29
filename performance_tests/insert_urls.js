@@ -7,9 +7,10 @@ export const options = {
         http_req_duration: ['p(95)<200'],
         checks: ['rate>0.99'],
     },
+    // vus: 5000,
+    // duration: '30s',
     stages: [
-        { duration: '30s', target: 500 },
-        { duration: '30s', target: 1000 },
+        { duration: '30s', target: 5000 },
         { duration: '30s', target: 5000 },
         { duration: '1m', target: 10000 },
         { duration: '30s', target: 0 },
@@ -48,5 +49,5 @@ export default function () {
         Body: ${res.body}`);
     }
 
-    sleep(1);
+    sleep(0.1);
 }
