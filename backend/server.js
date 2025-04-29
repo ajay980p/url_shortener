@@ -10,9 +10,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/', urlRoutes);
+app.use('/api', urlRoutes);
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
     return res.json({ success: true })
 })
 
